@@ -1,9 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import User
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 # написать модель корзины, модель отзывов, выводить в админке, написать вью вывода категорий, подкатегорий и товара,
 # добавление товаров в корзину
+
+class Category(MPTTModel):
+    """Модель категорий"""
+    name = models.CharField("Название категории", max_length=100)
+    parent = TreeForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
+    slug = models.SlugField()
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'категория'
+        verbose_name_plural = 'категории'
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
 
 
 class Product(models.Model):
@@ -11,9 +28,11 @@ class Product(models.Model):
     title = models.CharField("Название товара", max_length=100)
     text = models.TextField('Описание товара')
     picture = models.ImageField("Картинка", upload_to="images/", blank=True)
-    price = models.DecimalField("Цена", max_digits=6, decimal_places=2, default=0)
-    sail = models.DecimalField('Скидка', max_digits=6, decimal_places=2, default=0)
+    price = models.DecimalField("Цена", max_digits=9, decimal_places=2, default=0)
+    sail = models.DecimalField('Скидка', max_digits=9, decimal_places=2, default=0)
     article = models.IntegerField("артикул", default=0)
+    date = models.DateTimeField("дата", auto_now_add=True)
+    category = TreeForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -32,21 +51,8 @@ class Brand(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Страна'
-        verbose_name_plural = 'Страны'
-
-
-class Category(models.Model):
-    """Модель категорий"""
-    name = models.CharField("Название категории", max_length=100)
-    text = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'категория'
-        verbose_name_plural = 'категории'
+        verbose_name = 'Бренд'
+        verbose_name_plural = 'Бренды'
 
 
 class Comment(models.Model):

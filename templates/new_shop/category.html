@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+
+    {% for post in categories %}
+        <h1> <a class="text-dark" href="{% url 'product' slug=post.id %}">{{ post.title }}</a></h1>
+        {% if post.picture %}<img src="{{MEDIA_URL}}{{ post.picture.url }}" alt="">{% endif %}
+    {% endfor %}
+
+{% endblock %}
