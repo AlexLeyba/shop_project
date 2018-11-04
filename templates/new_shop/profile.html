@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+    <p>Ваше имя: {{ profile.name }}</p>
+    <p>Номер телефона {{ profile.phone }}</p>
+    <p>Адрес:{{ profile.address }}</p>
+
+    <table>
+        <tr>
+            <td class="text-center">Заказ:</td>
+            <td class="text-center">Статус заказа:</td>
+            <td class="text-center">Товары:</td>
+        </tr>
+        {% for i in zacaz %}
+            <tr>
+                <td>{{ i.id }}</td>
+                <td>{{ i.status }}</td>
+                <td>{{ i.items }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+{% endblock %}

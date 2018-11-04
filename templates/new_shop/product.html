@@ -4,36 +4,11 @@
     {{ foobar|safe }}
     <div class="row">
     {{ product.title }} <br>
-        <form method="post" action="{% url 'addcarditem' %}">
-            {% csrf_token %}
-            <input type="number" name="prod_id" hidden value="{{ product.id }}">
-            <button type="submit" class="btn btn-success">В корзину</button>
-        </form>
-        <img style="width: 150px; height: 100px;" src="{{MEDIA_URL}}{{ product.picture.url }}" alt="">
+            <button type="submit" class="btn btn-success"><a href="{% url 'add_to_card' slug=product.id %}">В корзину</a></button>
+        <img style="width: 300px; height: 200px;" src="{{MEDIA_URL}}{{ product.picture.url }}" alt="">
     {{ product.text|safe }}<br>
     <br>
     </div>
 
-{#    {% for i in comment %}#}
-{#        <div class="row">#}
-{#            <div class="col-12">#}
-{#                {{ i.user.username }}<br>#}
-{#                {{ i.text }}<br>#}
-{#                <a href="{% url 'like_comment' post_pk=single.id pk=i.id %}"><button type="submit" class="btn btn-primary">like - {{ i.chek }}</button></a><br>#}
-{#            </div>#}
-{#        </div>#}
-{#    {% endfor %}#}
-{##}
-{#    <div class="row">#}
-{#    <form action="" method="post" class="form">#}
-{#        {% csrf_token %}#}
-{#        {% bootstrap_form form %}#}
-{#        {% buttons %}#}
-{#            <button type="submit" class="btn btn-primary">Отправить</button>#}
-{#        {% endbuttons %}#}
-{#    </form>#}
-{#    </div>#}
-{#    {% for i in last_news %}#}
-{#        {{ i.title }}#}
-{#    {% endfor %}#}
+
 {% endblock %}

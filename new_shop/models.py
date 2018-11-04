@@ -3,9 +3,6 @@ from django.contrib.auth.models import User
 from mptt.models import MPTTModel, TreeForeignKey
 
 
-# написать модель корзины, модель отзывов, выводить в админке, написать вью вывода категорий, подкатегорий и товара,
-# добавление товаров в корзину
-
 class Category(MPTTModel):
     """Модель категорий"""
     name = models.CharField("Название категории", max_length=100)
@@ -87,7 +84,7 @@ class CardItem(models.Model):
 
 class Card(models.Model):
     """Корзина"""
-    item = models.ManyToManyField(CardItem)
+    item = models.ManyToManyField(CardItem, blank=True)
     card_total = models.DecimalField("Общая сумма", max_digits=9, decimal_places=2, default=0)
 
     def __str__(self):
@@ -96,3 +93,35 @@ class Card(models.Model):
     class Meta:
         verbose_name = 'id козины'
         verbose_name_plural = 'id корзин'
+
+
+class Zacaz(models.Model):
+    STATUS = (
+        (1, "В обработке"),
+        (2, "Доставка"),
+        (3, "Готово"),
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.IntegerField('статус заказа', choices=STATUS, max_length=10)
+    items = models.ForeignKey(Card, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return "{}".format(self.id)
+
+    class Meta:
+        verbose_name = 'заказ'
+        verbose_name_plural = 'заказы'
+
+
+class Profile(models.Model):
+    name = models.CharField('ФИО', max_length=300)
+    phone = models.IntegerField(default=0)
+    address = models.CharField("адрес", max_length=300)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{}".format(self.name)
+
+    class Meta:
+        verbose_name = 'Профиль'
+        verbose_name_plural = 'Профили'
