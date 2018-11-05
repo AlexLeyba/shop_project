@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-    <p>Ваше имя: {{ profile.name }}</p>
-    <p>Номер телефона {{ profile.phone }}</p>
-    <p>Адрес:{{ profile.address }}</p>
-
-    <table>
+    <a>Ваше имя: {{ profile.name }}<br>
+        Номер телефона {{ profile.phone }}<br>
+        Адрес:{{ profile.address }}</a><br>
+    <table class="table">
         <tr>
             <td class="text-center">Заказ:</td>
             <td class="text-center">Статус заказа:</td>
@@ -13,12 +12,10 @@
         </tr>
         {% for i in zacaz %}
             <tr>
-                <td>{{ i.id }}</td>
-                <td>{{ i.status }}</td>
-                <td>{{ i.items }}</td>
+                <td class="text-center">{{ i.id }}</td>
+                <td class="text-center">{{ i.status }}</td>
+                <td class="text-center">{{ i.items }}</td>
             </tr>
         {% endfor %}
     </table>
-
-
 {% endblock %}

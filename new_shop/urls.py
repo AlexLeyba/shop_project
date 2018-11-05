@@ -8,5 +8,6 @@ urlpatterns = [
     path('card/', Card_View.as_view(), name="card"),
     path('add_to_card/<int:slug>/', AddCardItem.as_view(), name='add_to_card'),
     path('delete_card_item/<int:slug>/', DeleteCardItem.as_view(), name='delete_card_item'),
-    path('profile/', ProfileView.as_view(), name='profile')
+    path('profile/', ProfileView.as_view(), name='profile'),
+    path('zacaz/', ZacazView.as_view(), name='zacaz'),
 ]

@@ -102,7 +102,7 @@ class Zacaz(models.Model):
         (3, "Готово"),
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.IntegerField('статус заказа', choices=STATUS, max_length=10)
+    status = models.IntegerField('статус заказа', choices=STATUS,)
     items = models.ForeignKey(Card, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):

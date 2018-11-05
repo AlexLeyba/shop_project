@@ -131,11 +131,23 @@ class Category_View(View):
 
 class ProfileView(View):
     def get(self, request):
+        try:
+            card_id = request.session['card_id']
+            card = Card.objects.get(id=card_id)
+            request.session['total'] = card.item.count()
+        except:
+            card = Card()
+            card.save()
+            card_id = card.id
+            request.session['card_id'] = card_id
+            card = Card.objects.get(id=card_id)
+
         profile = Profile.objects.get(user=request.user)
         zacaz = Zacaz.objects.filter(user=request.user)
         context = {
             'zacaz': zacaz,
-            "profile": profile
+            'profile': profile,
+            'card': card
         }
         return render(request, "new_shop/profile.html", context)
 
@@ -147,6 +159,6 @@ class ZacazView(View):
         card.save()
         card_id = card.id
         request.session['card_id'] = card_id
-        return render(request, 'new_shop/profile.html')
+        return HttpResponseRedirect('/profile/')
 
 

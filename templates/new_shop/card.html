@@ -15,9 +15,9 @@
                 <td class="text-center">{{ i.product.title }}</td>
                 <td class="text-center">{{ i.quantity}}</td>
                 <td class="text-center">{{ i.product.price }} р.</td>
-                   <td class="text-center"><a href="{% url 'delete_card_item' slug=i.product.id %}"><button class="btn btn-default">Удалить из корзины</button> </a></td>
+                   <td class="text-center"><a href="{% url 'delete_card_item' slug=i.product.id %}"><button class="btn btn-danger">Удалить из корзины</button> </a></td>
             </tr>
         {% endfor %}
     </table>
-
+            <a href="{% url 'zacaz' %}"><button class="btn btn-success">Оформить заказ</button> </a></td>
 {% endblock %}
