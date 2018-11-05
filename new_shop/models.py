@@ -96,7 +96,7 @@ class Card(models.Model):
 
 
 class Zacaz(models.Model):
-    """Заказ в """
+    """Заказ """
     STATUS = (
         ('1', "В обработке"),
         ('2', "Доставка"),
