@@ -10,4 +10,5 @@ urlpatterns = [
     path('delete_card_item/<int:slug>/', DeleteCardItem.as_view(), name='delete_card_item'),
     path('profile/', ProfileView.as_view(), name='profile'),
     path('zacaz/', ZacazView.as_view(), name='zacaz'),
+    path('search/', SearchView.as_view(), name='search'),
 ]

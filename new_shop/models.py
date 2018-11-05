@@ -96,13 +96,14 @@ class Card(models.Model):
 
 
 class Zacaz(models.Model):
+    """Заказ в """
     STATUS = (
-        (1, "В обработке"),
-        (2, "Доставка"),
-        (3, "Готово"),
+        ('1', "В обработке"),
+        ('2', "Доставка"),
+        ('3', "Готово"),
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.IntegerField('статус заказа', choices=STATUS,)
+    status = models.CharField('статус заказа', choices=STATUS, max_length=10, default='1')
     items = models.ForeignKey(Card, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):

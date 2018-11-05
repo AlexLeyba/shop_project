@@ -1,14 +1,13 @@
-# доделать профиль,  создание заказа, отмена заказа
+# сделать поиск по сайту
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.generic import View
 from new_shop.models import *
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
-
+from django.db.models import Q
 
 class General(View):
     """Вывод списка товаров на главную"""
-
     def get(self, request):
         try:
             card_id = request.session['card_id']
@@ -154,11 +153,28 @@ class ProfileView(View):
 
 class ZacazView(View):
     def get(self, request):
-        zacaz = Zacaz.objects.create(status=1, user=requset.user, items=Card.objects.get(id=request.session['card_id']))
+        zacaz = Zacaz.objects.create(status=1, user=request.user, items=Card.objects.get(id=request.session['card_id']))
         card = Card()
         card.save()
         card_id = card.id
         request.session['card_id'] = card_id
         return HttpResponseRedirect('/profile/')
+
+    def post(self, request):
+        zacaz = Zacaz.objects.get(user=request.user, id=request.POST.get("pk"))
+        zacaz.delete()
+        return HttpResponseRedirect('/profile/')
+
+
+
+class SearchView(View):
+    """Поиск по сайту"""
+    def post(self, request, *args, **kwargs):
+        query = self.request.POST.get('q')
+        founded = Product.objects.filter(Q(title__icontains=query)|Q(text__icontains=query))
+        context = {
+            'founded': founded
+        }
+        return render(request, 'new_shop/searh.html', context)
 
 
