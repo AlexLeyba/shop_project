@@ -4,6 +4,7 @@
     <a>Ваше имя: {{ profile.name }}<br>
         Номер телефона {{ profile.phone }}<br>
         Адрес:{{ profile.address }}</a><br>
+    <a href="{% url 'history' %}">История операций</a>
     <table class="table">
         <tr>
             <td class="text-center">Заказ:</td>
@@ -22,7 +23,9 @@
                 <td>
                     <form action="{% url 'zacaz' %}" method="post">
                         {% csrf_token %}
-                        <input type="number" name="pk" hidden value="{{ i.id }}">
+                        <label>
+                            <input type="number" name="pk" hidden value="{{ i.id }}">
+                        </label>
                         <button type="submit" class="btn btn-danger">Отменить заказ</button>
                     </form>
                 </td>

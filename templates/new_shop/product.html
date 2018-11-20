@@ -3,12 +3,23 @@
 {% block content %}
     {{ foobar|safe }}
     <div class="row">
-    {{ product.title }} <br>
-            <button type="submit" class="btn btn-success"><a href="{% url 'add_to_card' slug=product.id %}">В корзину</a></button>
-        <img style="width: 300px; height: 200px;" src="{{MEDIA_URL}}{{ product.picture.url }}" alt="">
-    {{ product.text|safe }}<br>
-    <br>
+        {{ product.title }} <br>
+        <a href="{% url 'add_to_card' slug=product.id %}">
+            <button class="btn btn-success">В корзину</button>
+        </a>
+        <img style="width: 300px; height: 200px;" src="{{ MEDIA_URL }}{{ product.picture.url }}" alt="">
+        {{ product.text|safe }}<br>
+        <br>
+        <a>Цена: {{ product.price }}</a>
+        <a href="{% url 'bay' slug=product.id %}">
+            <button class="btn btn-success">Купить сейчас</button>
+        </a>
     </div>
 
 
 {% endblock %}
+<a href="{% url 'balance' %}">
+    <button class="btn btn-success">Пополнить</button>
+</a>
+
+

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+    <p>Ваша история:</p>
+
+    <table>
+        <tr>
+            <td>Операция:</td>
+            <td>Баланс:</td>
+            <td>Сумма:</td>
+            <td>дата</td>
+        </tr>
+        {% for i in history %}
+            <tr>
+                <td>{{ i.get_action_display|lower }}</td>
+                <td>{{ i.balance }}</td>
+                <td>{{ i.history }}</td>
+                <td>{{ i.date }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'new_shop',
+    'support',
+    'pay',
     'bootstrap4',
     'django_summernote',
     'allauth',

@@ -30,6 +30,7 @@ class Product(models.Model):
     article = models.IntegerField("артикул", default=0)
     date = models.DateTimeField("дата", auto_now_add=True)
     category = TreeForeignKey(Category, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title
@@ -89,6 +90,22 @@ class Card(models.Model):
 
     def __str__(self):
         return "{}".format(self.id)
+
+    def delete_to_card(self, slug):
+        card = self
+        product = Product.objects.get(id=slug)
+        for card_item in card.item.all():
+            if card_item.product == product:
+                card.item.remove(card_item)
+                card.save()
+
+    def add_to_card(self, slug):
+        card = self
+        product = Product.objects.get(id=slug)
+        new_item = CardItem.objects.create(product=product, item_total=product.price)
+        if new_item not in card.item.all():
+            card.item.add(new_item)
+            card.save()
 
     class Meta:
         verbose_name = 'id козины'
