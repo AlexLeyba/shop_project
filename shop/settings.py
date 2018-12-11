@@ -77,7 +77,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'new_shop.contex_processors.category',
+                'new_shop.context_processors.category',
+                'new_shop.context_processors.wallet',
 
             ],
         },
@@ -140,6 +141,7 @@ STATICFILES_DIRS = [STATIC_DIR, ]
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 SUMMERNOTE_THEME = 'bs4'
 MPTT_ADMIN_LEVEL_INDENT = 20

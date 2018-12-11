@@ -11,4 +11,11 @@ urlpatterns = [
     path('profile/', ProfileView.as_view(), name='profile'),
     path('zacaz/', ZacazView.as_view(), name='zacaz'),
     path('search/', SearchView.as_view(), name='search'),
+    path('comments/<int:slug>', CommentVeiw.as_view(), name='comments'),
+    path('sendcomment/<int:pk>/', SendCommentVeiw.as_view(), name='sendcomment'),
+    path('sell/', Create.as_view(), name='sell'),
+    path('update/<int:pk>', Update.as_view(), name='update'),
+    path('user-product/', UserProduct.as_view(), name='userproduct'),
+
+
 ]

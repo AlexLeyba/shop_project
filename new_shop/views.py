@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect, HttpResponse
-from django.views.generic import View
+from django.views.generic import View, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import UpdateView, CreateView
+from new_shop.forms import CommentForm, SellForm
 from new_shop.models import *
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
@@ -16,21 +19,65 @@ class General(View):
         page = request.GET.get('page')
         contacts = paginator.get_page(page)
         context = {
-            "product": contacts,
+            'product': contacts,
             'card': card
         }
         return render(request, "new_shop/general.html", context)
 
 
 class Product_View(View):
+    """Вывод информации о продукте"""
+
     def get(self, request, slug):
         card = save(request)
         product = Product.objects.get(id=slug)
+        comments = Comment.objects.filter(new=product.id).count()
         context = {
+            'comments': comments,
             'product': product,
             'card': card
         }
         return render(request, "new_shop/product.html", context)
+
+
+
+class CommentVeiw(View):
+    """Вывод отзывов о товарах"""
+    def get(self,request, slug):
+        card = save(request)
+        product = Product.objects.get(id=slug)
+        comment = Comment.objects.filter(new=product.id)
+        context = {
+            'product': product,
+            'comment': comment,
+            'card': card,
+        }
+        return render(request, 'new_shop/comments.html', context)
+
+
+
+
+class SendCommentVeiw(View):
+    def get(self, request, pk):
+        form = CommentForm()
+        product = Product.objects.get(id=pk)
+        context = {
+            'product': product,
+            'form': form
+        }
+        return render(request, 'new_shop/sendcomment.html', context)
+
+    def post(self, request, pk):
+        """Форма отправки отзыва"""
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user = request.user
+            form.new = Product.objects.get(id=pk)
+            form.save()
+            return redirect("/comments/{}".format(pk))
+        else:
+            pass
 
 
 class Card_View(View):
@@ -74,6 +121,8 @@ class Category_View(View):
 
 
 class ProfileView(View):
+    """Профиль пользователя"""
+
     def get(self, request):
         card = save(request)
         profile = Profile.objects.get(user=request.user)
@@ -87,6 +136,8 @@ class ProfileView(View):
 
 
 class ZacazView(View):
+    """Создание заказа"""
+
     def get(self, request):
         zacaz = Zacaz.objects.create(status=1, user=request.user, items=Card.objects.get(id=request.session['card_id']))
         card = Card()
@@ -112,6 +163,7 @@ class SearchView(View):
 
 
 def save(request):
+    """Отображение корзины"""
     try:
         card_id = request.session['card_id']
         cards = Card.objects.get(id=card_id)
@@ -122,3 +174,34 @@ def save(request):
         request.session['card_id'] = card.id
         cards = Card.objects.get(id=card.id)
     return cards
+
+
+class Create(CreateView):
+    model = Product
+    template_name = 'new_shop/sell.html'
+    form_class = SellForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.save()
+        return redirect("/profile/")
+
+    def success_url(self):
+        return redirect("/profile/")
+
+
+class Update(UpdateView):
+    model = Product
+    template_name = 'new_shop/redit.html'
+    form_class = SellForm
+
+    # def success_url(self):
+    #     return redirect("/user-product/")
+
+
+class UserProduct(ListView):
+    template_name = 'new_shop/update.html'
+
+    def get_queryset(self):
+        return Product.objects.filter(user=self.request.user)
+

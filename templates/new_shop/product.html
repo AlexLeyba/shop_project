@@ -7,7 +7,9 @@
         <a href="{% url 'add_to_card' slug=product.id %}">
             <button class="btn btn-success">В корзину</button>
         </a>
+        {% if product.picture %}
         <img style="width: 300px; height: 200px;" src="{{ MEDIA_URL }}{{ product.picture.url }}" alt="">
+        {% endif %}
         {{ product.text|safe }}<br>
         <br>
         <a>Цена: {{ product.price }}</a>
@@ -16,10 +18,13 @@
         </a>
     </div>
 
-
+        <div>
+            <a href="{% url 'comments' slug=product.id %}">Отзывы{{ comments }}</a>
+        </div>
 {% endblock %}
-<a href="{% url 'balance' %}">
-    <button class="btn btn-success">Пополнить</button>
-</a>
-
+{% if user.is_authenticated %}
+    <a href="{% url 'balance' %}">
+        <button class="btn btn-success">Пополнить</button>
+    </a>
+{% endif %}
 

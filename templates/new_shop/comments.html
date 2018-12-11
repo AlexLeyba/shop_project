@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+    <div>
+        {% buttons %}
+            <a href="{% url 'sendcomment' pk=product.id %}"><button type="submit" class="btn btn-primary">Оставить
+                отзыв
+            </button></a>
+        {% endbuttons %}
+        <p>Отзывы:</p><br>
+        {% if comment %}
+        <p>
+            {% for commemts in comment %}
+                {{ commemts.user }}<br>
+                {{ commemts.text }}<br>
+                {{ commemts.chek }}<br>
+            {% endfor %}
+        </p>
+        {% endif %}
+
+    </div>
+
+
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 
 
@@ -38,6 +39,9 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
+
+    def get_absolute_url(self):
+        return reverse('userproduct')
 
 
 class Brand(models.Model):
@@ -113,7 +117,7 @@ class Card(models.Model):
 
 
 class Zacaz(models.Model):
-    """Заказ """
+    """Заказ"""
     STATUS = (
         ('1', "В обработке"),
         ('2', "Доставка"),

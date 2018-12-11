@@ -100,10 +100,13 @@
                     <a class="btn btn-sm btn-outline-secondary" href="/accounts/login">Войти</a>
                 {% endif %}
             </div>
-            <a>{% for i in balance %}Ваш баланс: {{ i.balance }} {% endfor %}</a>
+        {% if user.is_authenticated %}
+            <a>Ваш баланс: {{ balance.balance }}</a>
+
             <a href="{% url 'balance' %}">
                 <button class="btn btn-success">Пополнить</button>
             </a>
+        {% endif %}
         </div>
     </header>
     <ul class="root">
@@ -120,7 +123,9 @@
 
     </ul>
     <ul class="navbar-nav">
+        {% if user.is_authenticated %}
         <li><a href='{% url "card" %}'>Корзина <span class="badge">{{ card.item.count }}</span></a></li>
+        {% endif %}
     </ul>
 
     <div class="row mb-2">
