@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-    <p>Оставьте ваш отзыв здесь: </p><br>
-    <form action="{% url 'sendcomment' pk=product.id %}" method="post" class="form">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        {% buttons %}
-            <button type="submit" class="btn btn-primary">Отправить</button>
-        {% endbuttons %}
-    </form>
-
+    <div class="container">
+        <div class="row">
+            <p>Оставьте ваш отзыв здесь: </p><br>
+            <form action="{% url 'sendcomment' pk=product.id %}" method="post" class="form">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                {% endbuttons %}
+            </form>
+        </div>
+    </div>
 {% endblock %}

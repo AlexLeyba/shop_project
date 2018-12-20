@@ -1,38 +1,50 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-    <a>Ваше имя: {{ profile.name }}<br>
-        Номер телефона {{ profile.phone }}<br>
-        Адрес:{{ profile.address }}</a><br>
-    <a href="{% url 'history' %}">История операций</a>
-    <table class="table">
-        <tr>
-            <td class="text-center">Заказ:</td>
-            <td class="text-center">Статус заказа:</td>
-            <td class="text-center">Товары:</td>
-        </tr>
-        {% for i in zacaz %}
-            <tr>
-                <td class="text-center">{{ i.id }}</td>
-                <td class="text-center">{{ i.get_status_display|lower }}</td>
-                <td class="text-center">
-                    {% for item in i.items.item.all %}
-                        {{ item.product.title }}<br>
-                    {% endfor %}
-                </td>
-                <td>
-                    <form action="{% url 'zacaz' %}" method="post">
-                        {% csrf_token %}
-                        <label>
-                            <input type="number" name="pk" hidden value="{{ i.id }}">
-                        </label>
-                        <button type="submit" class="btn btn-danger">Отменить заказ</button>
-                    </form>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
-    <a href='{% url 'sell' %}'><button>Выставить на продажу</button> </a>
-
-    <a href="{% url 'userproduct' %}">Список товаров</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+            <p>Ваше имя: {{ profile.name }}<br>
+                Номер телефона: {{ profile.phone }}<br>
+                Адрес: {{ profile.address }}</p><br>
+            <p><a href="{% url 'history' %}">{% bootstrap_button "История операций" button_type="submit" button_class="btn-info" %}</a>
+            </p>
+            <table class="table">
+                <tr>
+                    <td class="text-center">Заказ:</td>
+                    <td class="text-center">Статус заказа:</td>
+                    <td class="text-center">Товары:</td>
+                </tr>
+                {% for i in zacaz %}
+                    <tr>
+                        <td class="text-center">{{ i.id }}</td>
+                        <td class="text-center">{{ i.get_status_display|lower }}</td>
+                        <td class="text-center">
+                            {% for item in i.items.item.all %}
+                                {{ item.product.title }}<br>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <form action="{% url 'zacaz' %}" method="post">
+                                {% csrf_token %}
+                                <label>
+                                    <input type="number" name="pk" hidden value="{{ i.id }}">
+                                </label>
+                                <button type="submit" class="btn btn-danger">Отменить заказ</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            </div>
+            <div class="col-12">
+                <a href='{% url 'sell' %}'>
+                    {% bootstrap_button "Выставить на продажу" button_type="submit" button_class="btn-primary" %}
+                </a>
+            </div>
+            <div class="col-12">
+                <a href="{% url 'userproduct' %}">{% bootstrap_button "Ваши объявления" button_type="submit" button_class="btn-warning" %}</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

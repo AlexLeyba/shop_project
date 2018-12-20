@@ -1,23 +1,25 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-    <p>Ваша история:</p>
-
-    <table>
-        <tr>
-            <td>Операция:</td>
-            <td>Баланс:</td>
-            <td>Сумма:</td>
-            <td>дата</td>
-        </tr>
-        {% for i in history %}
-            <tr>
-                <td>{{ i.get_action_display|lower }}</td>
-                <td>{{ i.balance }}</td>
-                <td>{{ i.history }}</td>
-                <td>{{ i.date }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-
+    <div class="container">
+        <div class="row">
+            <p>Ваша история:</p>
+            <table class="table">
+                <tr>
+                    <td class="text-center">Операция:</td>
+                    <td class="text-center">Баланс:</td>
+                    <td class="text-center">Сумма:</td>
+                    <td class="text-center">дата</td>
+                </tr>
+                {% for i in history %}
+                    <tr>
+                        <td class="text-center">{{ i.get_action_display|lower }}</td>
+                        <td class="text-center">{{ i.balance }}</td>
+                        <td class="text-center">{{ i.history }}</td>
+                        <td class="text-center">{{ i.date }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 {% endblock %}

@@ -2,25 +2,35 @@
 {% load bootstrap4 %}
 {% block content %}
     {{ foobar|safe }}
-    <div class="row">
-        {{ product.title }} <br>
-        <a href="{% url 'add_to_card' slug=product.id %}">
-            <button class="btn btn-success">В корзину</button>
-        </a>
-        {% if product.picture %}
-        <img style="width: 300px; height: 200px;" src="{{ MEDIA_URL }}{{ product.picture.url }}" alt="">
-        {% endif %}
-        {{ product.text|safe }}<br>
-        <br>
-        <a>Цена: {{ product.price }}</a>
-        <a href="{% url 'bay' slug=product.id %}">
-            <button class="btn btn-success">Купить сейчас</button>
-        </a>
+    <div class="container">
+        <div class="row">
+            <h2>{{ product.title }}</h2> <br>
+            {% if product.picture %}
+                <img style="width: 300px; height: 300px;" src="{{ MEDIA_URL }}{{ product.picture.url }}" alt="">
+            {% endif %}
+            {{ product.text|safe }}<br>
+            <br>
+            <h4>Цена: {{ product.price }} р.</h4>
+            <a href="{% url 'add_to_card' slug=product.id %}">
+                {% bootstrap_button "В корзину" button_type="submit" button_class="btn-success" %}
+            </a>
+            <a href="{% url 'bay' slug=product.id %}">{% bootstrap_button "Купить сейчас" button_type="submit" button_class="btn-warning" %}
+            </a>
+            <a href="{% url 'comments' slug=product.id %}">
+                {% bootstrap_button "Отзывы" button_type="submit" button_class="btn-primary" %}</a>
+        </div>
     </div>
 
-        <div>
-            <a href="{% url 'comments' slug=product.id %}">Отзывы{{ comments }}</a>
-        </div>
+    {#    <div>#}
+    {#        <a href="{% url 'comments' slug=product.id %}">Отзывы{{ comments }}</a>#}
+    {#        <p>Рейтинг товара {{ rating }} </p>#}
+    {#        <a href="{% url 'rating' pk=1 slug=product.id %}">Звезда 1</a>#}
+    {#        <a href="{% url 'rating' pk=2 slug=product.id %}">Звезда 2</a>#}
+    {#        <a href="{% url 'rating' pk=3 slug=product.id %}">Звезда 3</a>#}
+    {#        <a href="{% url 'rating' pk=4 slug=product.id %}">Звезда 4</a>#}
+    {#        <a href="{% url 'rating' pk=5 slug=product.id %}">Звезда 5</a>#}
+    {##}
+    {#    </div>#}
 {% endblock %}
 {% if user.is_authenticated %}
     <a href="{% url 'balance' %}">

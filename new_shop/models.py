@@ -4,6 +4,22 @@ from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 
 
+class Rating(models.Model):
+    user = models.ManyToManyField(User)
+    star_one = models.IntegerField(verbose_name='1 звезда', default=0)
+    star_two = models.IntegerField(verbose_name='2 зыезды', default=0)
+    star_three = models.IntegerField(verbose_name='3 зыезды', default=0)
+    star_four = models.IntegerField(verbose_name='4 зыезды', default=0)
+    star_five = models.IntegerField(verbose_name='5 зыезд', default=0)
+
+    def __str__(self):
+        return "{}".format(self.id)
+
+    class Meta:
+        verbose_name = 'Рейтинг'
+        verbose_name_plural = 'Рейтинги'
+
+
 class Category(MPTTModel):
     """Модель категорий"""
     name = models.CharField("Название категории", max_length=100)
@@ -32,6 +48,14 @@ class Product(models.Model):
     date = models.DateTimeField("дата", auto_now_add=True)
     category = TreeForeignKey(Category, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    rating = models.ForeignKey(Rating, on_delete=models.CASCADE, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if self.rating is not None:
+            pass
+        else:
+            self.rating = Rating.objects.create()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

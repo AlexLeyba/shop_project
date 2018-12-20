@@ -15,7 +15,7 @@ class General(View):
     def get(self, request):
         card = save(request)
         product = Product.objects.all()
-        paginator = Paginator(product, 10)
+        paginator = Paginator(product, 5)
         page = request.GET.get('page')
         contacts = paginator.get_page(page)
         context = {
@@ -32,10 +32,14 @@ class Product_View(View):
         card = save(request)
         product = Product.objects.get(id=slug)
         comments = Comment.objects.filter(new=product.id).count()
+        rating = (product.rating.star_one + product.rating.star_two + product.rating.star_three + product.rating.star_four \
+                    + product.rating.star_five) / 5
+
         context = {
             'comments': comments,
             'product': product,
-            'card': card
+            'card': card,
+            'rating': rating
         }
         return render(request, "new_shop/product.html", context)
 
@@ -144,12 +148,12 @@ class ZacazView(View):
         card.save()
         card_id = card.id
         request.session['card_id'] = card_id
-        return HttpResponseRedirect('/profile/')
+        return HttpResponseRedirect('/accounts/profile/')
 
     def post(self, request):
         zacaz = Zacaz.objects.get(user=request.user, id=request.POST.get("pk"))
         zacaz.delete()
-        return HttpResponseRedirect('/profile/')
+        return HttpResponseRedirect('/accounts/profile/')
 
 
 class SearchView(View):
@@ -205,3 +209,21 @@ class UserProduct(ListView):
     def get_queryset(self):
         return Product.objects.filter(user=self.request.user)
 
+
+class RatingVeiw(LoginRequiredMixin,View):
+    def get(self, request, pk, slug):
+        product = Rating.objects.get(product__id=slug)
+        if pk == 1:
+            product.star_one += 1
+        elif pk == 2:
+            product.star_two += 1
+        elif pk == 3:
+            product.star_three += 1
+        elif pk == 4:
+            product.star_four += 1
+        elif pk == 5:
+            product.star_five += 1
+        else:
+            pass
+        product.save()
+        return HttpResponse(status=201)

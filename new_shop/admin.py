@@ -30,6 +30,7 @@ class ZacazAdmin(admin.ModelAdmin):
     form = ZacazForm
 
 
+admin.site.register(Rating)
 admin.site.register(Product, PostAdmin)
 admin.site.register(Card)
 admin.site.register(CardItem)

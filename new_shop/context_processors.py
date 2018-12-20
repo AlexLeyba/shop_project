@@ -1,4 +1,4 @@
-from new_shop.models import Category
+from new_shop.models import Category, User
 from pay.models import Wallet
 
 
@@ -14,3 +14,7 @@ def wallet(request):
     else:
         return {"balance": 0}
 
+
+def user(request):
+    user = User.objects.get(user=request.user)
+    return {'user': user}

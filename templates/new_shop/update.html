@@ -1,18 +1,23 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-    <table class="table">
-        <tr>
-            <td class="text-center">ID:</td>
-            <td class="text-center">Товары:</td>
-            <td class="text-center">Редактировать:</td>
-        </tr>
-        {% for i in object_list %}
-            <tr>
-                <td class="text-center">{{ i.id }}</td>
-                <td>{{ i.title }}</td>
-                <td><a href='{% url 'update' pk=i.id %}' class="btn">Редактировать</a> </td>
-            </tr>
-        {% endfor %}
-    </table>
+    <div class="container">
+        <div class="row">
+            <table class="table">
+                <tr>
+                    <td class="text-center">ID:</td>
+                    <td class="text-center">Товары:</td>
+                </tr>
+                {% for i in object_list %}
+                    <tr>
+                        <td class="text-center">{{ i.id }}</td>
+                        <td>{{ i.title }}</td>
+                        <td>
+                            <a href='{% url 'update' pk=i.id %}'>{% bootstrap_button "Редактировать" button_type="submit" button_class="btn-warning" %}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 {% endblock %}
