@@ -145,3 +145,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 SUMMERNOTE_THEME = 'bs4'
 MPTT_ADMIN_LEVEL_INDENT = 20
+
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'

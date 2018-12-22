@@ -5,10 +5,13 @@
 {% block head_title %}{% trans "Sign Out" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Sign Out" %}</h1>
-
-    <p>{% trans 'Are you sure you want to sign out?' %}</p>
     <div class="container">
+        <div class="row">
+            <h1>{% trans "Sign Out" %}</h1>
+        </div>
+        <div class="row">
+            <p>{% trans 'Are you sure you want to sign out?' %}</p>
+        </div>
         <div class="row">
             <form method="post" class="form-group" action="{% url 'account_logout' %}">
                 <div class="form-group">
@@ -16,10 +19,10 @@
                     {% if redirect_field_value %}
                         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
                     {% endif %}
-                    <button type="submit">{% trans 'Sign Out' %}</button>
+                    <button class="btn btn-primary" type="submit">{% trans 'Sign Out' %}</button>
                 </div>
             </form>
         </div>
     </div>
-
 {% endblock %}
+

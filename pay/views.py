@@ -37,12 +37,16 @@ class Balance(View):
 
 
 class BayView(View):
-    """Покупка товара"""
+    """Покупка товара, передачи денег продавцу и комиссия портала"""
 
     def get(self, request, slug):
         if not Product.objects.filter(user=request.user).exists():
             wallet = Wallet.objects.get(user=request.user)
             product = Product.objects.get(id=slug)
+            if product.price >= wallet.balance:
+                return HttpResponseRedirect('/auction/')
+            elif product.price >= wallet.balance:
+                return HttpResponseRedirect('/auction/')
             wallet.balance -= decimal.Decimal(str(float(product.price)))
             percent = product.price / 100 * 20
             sell = Wallet.objects.get(user=product.user)

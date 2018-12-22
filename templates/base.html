@@ -6,21 +6,15 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description"
-          content="Пример на bootstrap 4: Макет jumbotron с навигационной панели и базовая система разметки.">
+    <meta name="description">
     <meta name="author" content="">
-    <link rel="icon" href='/media/images/card.jpg'>
+    <link rel="icon" href='/media/images/card.png'>
     <title>Shop Project</title>
-
-    <!-- Bootstrap core CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
     <link href="{% static 'css/jumbotron.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
-
 <body>
-
 <script type="text/javascript" async="" src=".{% static  'js/watch.js' %}"></script>
 <script async="" src="{% static 'js/analytics.js' %}"></script>
 <script>
@@ -35,13 +29,9 @@
         a.src = g;
         m.parentNode.insertBefore(a, m)
     })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-
     ga('create', 'UA-4481610-59', 'auto');
     ga('send', 'pageview');
-
 </script>
-
-<!-- Yandex.Metrika counter -->
 <script type="text/javascript"> (function (d, w, c) {
     (w[c] = w[c] || []).push(function () {
         try {
@@ -71,14 +61,12 @@
     <div><img src="https://mc.yandex.ru/watch/39705265" style="position:absolute; left:-9999px;" alt="Yandex.Metrika"/>
     </div>
 </noscript> <!-- /Yandex.Metrika counter -->
-
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="/">Shop Project</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -93,7 +81,7 @@
                         <a class="nav-link" href="{% url 'balance' %}">Ваш баланс {{ balance.balance }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'balance' %}">Пополнить баланс</a>
+                        <a class="nav-link " href="{% url 'balance' %}">Пополнить баланс</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled" href="/accounts/logout">Выйти</a>
@@ -104,18 +92,18 @@
                 </li>
             <li class="nav-item dropdown category-drop">
                 <a class="nav-link " href="#" id="dropdown01">Категории</a>
-                    <div class="node">
-                {% recursetree category %}
-                    <div class="a-node">
-                        <a class="dropdown-item" href="{% url 'category' slug=node.slug %}">{{ node.name }}</a>
-                        {% if not node.is_leaf_node %}
-                            <div class="a-child">
-                                <a class="" href="#">{{ children }}</a>
-                            </div>
-                        {% endif %}
-                    </div>
-                {% endrecursetree %}
-                    </div>
+                <div class="node">
+                    {% recursetree category %}
+                        <div class="a-node">
+                            <a class="dropdown-item" href="{% url 'category' slug=node.slug %}">{{ node.name }}</a>
+                            {% if not node.is_leaf_node %}
+                                <div class="a-child">
+                                    <a class="" href="#">{{ children }}</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endrecursetree %}
+                </div>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'search' %}">
@@ -128,7 +116,7 @@
 <main role="main">
     <div class="jumbotron">
         <div class="container">
-            <h1 class="display-5">Shop Project</h1>
+            <h1 class="display-5"><a class="text-dark" href="/">Shop Project</a></h1>
             {% if user.is_authenticated %}
                 <p>Welcome {{ user }}</p>
             {% else %}
@@ -142,8 +130,8 @@
     {% block content %}
     {% endblock %}
 </main>
-<footer class="container">
-    <p>© Company 2017-2018</p>
+<footer class="footer">
+    <p class="text-center"><a class="text-black-50" href="https://vk.com/shaaaaaaady">Я в VK</a></p>
 </footer>
 <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -151,60 +139,5 @@
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
 <script src="{% static 'js/popper.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
-
-
-<style>
-    .node {
-        position: absolute;
-        display: none;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid rgba(0, 0, 0, .15);
-        border-radius: .25rem;
-    }
-    .a-node {
-
-        top: 100%;
-        left: 10px;
-        overflow: paged-x;
-        z-index: 1000;
-        display: none;
-        float: left;
-        min-width: 10rem;
-        padding: .5rem 0;
-        margin: .125rem 0 0;
-        font-size: 1rem;
-        color: #212529;
-        text-align: left;
-        list-style: none;
-
-    }
-
-    .category-drop {
-        width: 100px;
-    }
-
-    .category-drop:hover .node, .a-node {
-        display: block;
-    }
-
-    .a-child {
-        display: none;
-        position: absolute;
-        z-index: 1001;
-        margin: -35px 0 0 0;
-        left: 100%;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid rgba(0, 0, 0, .15);
-        border-radius: .25rem;
-    }
-
-    .a-node:hover .a-child {
-        display: block;
-    }
-
-
-</style>
 </body>
 </html>

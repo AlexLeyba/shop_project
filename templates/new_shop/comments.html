@@ -11,11 +11,13 @@
                 </a>
             {% endbuttons %}
             <div class="col-12">
-                <h4>Отзывы:</h4><br>
+                <h4>Отзывы:</h4>
                 {% if comment %}
                         {% for commemts in comment %}
+                            <div class="comments">
                             <p class="text-success">{{ commemts.user }}</p>
-                            <p class="text">{{ commemts.text }}</p><br>
+                            <p class="text">{{ commemts.text }}</p>
+                            </div>
                         {% endfor %}
                     <br>
                 {% endif %}

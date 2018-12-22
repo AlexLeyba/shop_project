@@ -1,0 +1,71 @@
+.jumbotron {
+    padding: 2rem 1rem;
+}
+
+.paginator-div {
+    margin: 0 auto;
+    max-width: 100px;
+}
+
+.node {
+    position: absolute;
+    display: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: .25rem;
+}
+
+.a-node {
+
+    top: 100%;
+    left: 10px;
+    overflow: paged-x;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    width: 100%;
+    padding: .5rem 0;
+    margin: .125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+
+}
+
+.category-drop {
+    width: 100px;
+}
+
+.category-drop:hover .node, .a-node {
+    display: block;
+}
+
+.a-child {
+    display: none;
+    position: absolute;
+    z-index: 1001;
+    margin: -35px 0 0 0;
+    left: 100%;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: .25rem;
+}
+
+.a-node:hover .a-child {
+    display: block;
+}
+
+.comments {
+    margin: 10px 0;
+    padding: 15px;
+    border: 1px solid #cecece;
+    box-shadow: 1px 1px 4px 1px #cecece;
+}
+.footer {
+    margin: 0 auto;
+    max-width: 100px;
+}
