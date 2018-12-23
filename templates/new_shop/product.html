@@ -11,11 +11,13 @@
             {{ product.text|safe }}<br>
             <br>
             <h4>Цена: {{ product.price }} р.</h4>
-            <a href="{% url 'add_to_card' slug=product.id %}">
-                {% bootstrap_button "В корзину" button_type="submit" button_class="btn-success" %}
-            </a>
-            <a href="{% url 'bay' slug=product.id %}">{% bootstrap_button "Купить сейчас" button_type="submit" button_class="btn-warning" %}
-            </a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'add_to_card' slug=product.id %}">
+                    {% bootstrap_button "В корзину" button_type="submit" button_class="btn-success" %}
+                </a>
+                <a href="{% url 'bay' slug=product.id %}">{% bootstrap_button "Купить сейчас" button_type="submit" button_class="btn-warning" %}
+                </a>
+            {% endif %}
             <a href="{% url 'comments' slug=product.id %}">
                 {% bootstrap_button "Отзывы" button_type="submit" button_class="btn-primary" %}</a>
         </div>

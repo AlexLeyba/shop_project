@@ -188,10 +188,10 @@ class Create(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.save()
-        return redirect("/profile/")
+        return redirect('/accounts/profile/')
 
     def success_url(self):
-        return redirect("/profile/")
+        return redirect('/accounts/profile/')
 
 
 class Update(UpdateView):

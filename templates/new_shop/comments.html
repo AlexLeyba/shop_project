@@ -3,22 +3,24 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            {% buttons %}
-                <a href="{% url 'sendcomment' pk=product.id %}">
-                    <button type="submit" class="btn btn-primary">Оставить
-                        отзыв
-                    </button>
-                </a>
-            {% endbuttons %}
+            {% if user.is_authenticated %}
+                {% buttons %}
+                    <a href="{% url 'sendcomment' pk=product.id %}">
+                        <button type="submit" class="btn btn-primary">Оставить
+                            отзыв
+                        </button>
+                    </a>
+                {% endbuttons %}
+            {% endif %}
             <div class="col-12">
                 <h4>Отзывы:</h4>
                 {% if comment %}
-                        {% for commemts in comment %}
-                            <div class="comments">
+                    {% for commemts in comment %}
+                        <div class="comments">
                             <p class="text-success">{{ commemts.user }}</p>
                             <p class="text">{{ commemts.text }}</p>
-                            </div>
-                        {% endfor %}
+                        </div>
+                    {% endfor %}
                     <br>
                 {% endif %}
             </div>
