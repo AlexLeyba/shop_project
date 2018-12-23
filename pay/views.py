@@ -59,7 +59,7 @@ class BayView(View):
             sell.save()
             return HttpResponseRedirect('/')
         else:
-            return HttpResponse('error')
+            return HttpResponse('Невозможно купить у себя.')
 
 
 class HistoryView(View):
