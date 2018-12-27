@@ -168,6 +168,9 @@ class Profile(models.Model):
     address = models.CharField("адрес", max_length=300)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    def get_absolute_url(self):
+        return reverse('profile')
+
     def __str__(self):
         return "{}".format(self.name)
 

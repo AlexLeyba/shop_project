@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'knmw*ivfkzty4eqnsvz2^v^j!56k4edbb^f)i$$s-)fo@($&s('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -147,3 +147,6 @@ SUMMERNOTE_THEME = 'bs4'
 MPTT_ADMIN_LEVEL_INDENT = 20
 
 EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+
+MY_INFO = 80
+MESSAGE_LEVEL = MY_INFO

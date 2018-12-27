@@ -6,8 +6,14 @@
             {% for i in founded %}
                 <div class="col-md-4">
                     <h2><a class="text-dark" href="{% url 'product' slug=i.id %}">{{ i.title }}</a></h2>
+                    <div class="row">
+                        <p><a href="{% url 'comments' slug=i.id %}">
+                            {% bootstrap_button "Отзывы" button_type="submit" button_class="btn-primary" %}</a></p>
+                    </div>
                     {% if i.picture %}
-                        <img style="width: 300px; height: 300px;" src="{{ MEDIA_URL }}{{ i.picture.url }}" alt="">
+                        <a href="{% url 'product' slug=i.id %}"><img style="width: 300px; height: 300px;"
+                                                                     src="{{ MEDIA_URL }}{{ i.picture.url }}"
+                                                                     alt=""></a>
                     {% endif %}
                     <p>{{ i.text|safe|truncatewords:150 }}</p>
                     <p><a class="btn btn-primary" href="{% url 'product' slug=i.id %}"

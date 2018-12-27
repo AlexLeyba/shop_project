@@ -23,9 +23,11 @@
                     </tr>
                 {% endfor %}
             </table>
+             {% if card.item.exclude %}
             <a href="{% url 'zacaz' %}">
                 <button class="btn btn-success">Оформить заказ</button>
             </a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

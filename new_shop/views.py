@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.views.generic import View, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView, CreateView
-from new_shop.forms import CommentForm, SellForm
+from new_shop.forms import CommentForm, SellForm, ProfileForm
 from new_shop.models import *
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
@@ -227,3 +227,9 @@ class RatingVeiw(LoginRequiredMixin,View):
             pass
         product.save()
         return HttpResponse(status=201)
+
+
+class EditProfile(UpdateView):
+    model = Profile
+    template_name = 'new_shop/EditProfile.html'
+    form_class = ProfileForm

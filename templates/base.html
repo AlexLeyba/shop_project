@@ -62,7 +62,7 @@
     </div>
 </noscript> <!-- /Yandex.Metrika counter -->
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="/">Shop Project</a>
+    <a class="navbar-brand text-warning" href="/">Shop Project</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -70,28 +70,8 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                {% if user.is_authenticated %}
-                    <a class="nav-link" href="{% url 'profile' %}"> Профиль <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'card' %}">Козина<span
-                                class="badge">{{ card.item.count }}</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'balance' %}">Ваш баланс {{ balance.balance }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="{% url 'balance' %}">Пополнить баланс</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="/accounts/logout">Выйти</a>
-                        {% else %}
-                    <li class="nav-item">
-                    <a class="nav-link disabled" href="/accounts/login">Войти</a>
-                {% endif %}
-                </li>
             <li class="nav-item dropdown category-drop">
-                <a class="nav-link " href="#" id="dropdown01">Категории</a>
+                <a class="nav-link text-warning" href="#" id="dropdown01">Категории</a>
                 <div class="node">
                     {% recursetree category %}
                         <div class="a-node">
@@ -104,6 +84,26 @@
                         </div>
                     {% endrecursetree %}
                 </div>
+            </li>
+            {% if user.is_authenticated %}
+                <a class="nav-link text-warning" href="{% url 'profile' %}"> Профиль <span
+                        class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link text-warning" href="{% url 'card' %}">Корзина<span
+                            class="badge">{{ card.item.count }}</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-success" href="{% url 'balance' %}">Ваш баланс: {{ balance.balance }} р.</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-warning" href="{% url 'balance' %}">Пополнить</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link disabled text-danger" href="/accounts/logout">Выйти</a>
+                    {% else %}
+                <li class="nav-item">
+                <a class="nav-link disabled text-success" href="/accounts/login">Войти</a>
+            {% endif %}
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'search' %}">

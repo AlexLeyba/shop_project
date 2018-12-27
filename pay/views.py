@@ -1,11 +1,13 @@
 import decimal
-from django.shortcuts import render
+from django.conf import settings
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import View
 from pay.models import *
 from new_shop.models import Product
 from pay.forms import WalletForm
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib import messages
 
 
 class Balance(View):
@@ -40,26 +42,30 @@ class BayView(View):
     """Покупка товара, передачи денег продавцу и комиссия портала"""
 
     def get(self, request, slug):
-        if not Product.objects.filter(user=request.user).exists():
-            wallet = Wallet.objects.get(user=request.user)
-            product = Product.objects.get(id=slug)
-            if product.price >= wallet.balance:
-                return HttpResponseRedirect('/auction/')
-            elif product.price >= wallet.balance:
-                return HttpResponseRedirect('/auction/')
-            wallet.balance -= decimal.Decimal(str(float(product.price)))
-            percent = product.price / 100 * 20
-            sell = Wallet.objects.get(user=product.user)
-            sell.balance += decimal.Decimal(str(float(product.price - percent)))
-            history = History.objects.create(user=wallet, balance=wallet.balance, history=product.price)
-            admin_wallet = AdminWallet.objects.create(balance=percent)
-            admin_wallet.save()
-            history.save()
-            wallet.save()
-            sell.save()
-            return HttpResponseRedirect('/')
-        else:
-            return HttpResponse('Невозможно купить у себя.')
+        try:
+            product = Product.objects.exclude(user=request.user).get(id=slug)
+        except Product.DoesNotExist:
+            messages.add_message(self.request, settings.MY_INFO, 'Невозможно купить товар у себя!')
+            return HttpResponseRedirect('product/{}'.format(slug))
+        wallet = Wallet.objects.get(user=request.user)
+        if product.price >= wallet.balance:
+            messages.add_message(self.request, settings.MY_INFO, 'Недостаточно средств!')
+            return HttpResponseRedirect('product/{}'.format(slug))
+        elif product.price >= wallet.balance:
+            messages.add_message(self.request, settings.MY_INFO, 'Недостаточно средств!')
+            return HttpResponseRedirect('product/{}'.format(slug))
+        wallet.balance -= decimal.Decimal(str(float(product.price)))
+        percent = product.price / 100 * 20
+        sell = Wallet.objects.get(user=product.user)
+        sell.balance += decimal.Decimal(str(float(product.price - percent)))
+        history = History.objects.create(user=wallet, balance=wallet.balance, history=product.price)
+        admin_wallet = AdminWallet.objects.create(balance=percent)
+        admin_wallet.save()
+        history.save()
+        wallet.save()
+        sell.save()
+        messages.add_message(self.request, settings.MY_INFO, 'Вы успешно купили товар!')
+        return redirect('product/{}'.format(slug))
 
 
 class HistoryView(View):
